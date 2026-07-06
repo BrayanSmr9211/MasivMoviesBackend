@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9AF2C294-722B-49C2-948D-C5782A8945CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasivMovies.Domain", "src\MasivMovies.Domain\MasivMovies.Domain.csproj", "{BAD869FC-6D2E-42BF-8798-A8FEF26BC3C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasivMovies.Application", "src\MasivMovies.Application\MasivMovies.Application.csproj", "{F4A4DFAE-8E43-4824-9C8F-0D90C466CB6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasivMovies.Infrastructure", "src\MasivMovies.Infrastructure\MasivMovies.Infrastructure.csproj", "{1D3A6C4D-64CC-4C66-A253-6C3A57009AE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasivMovies.API", "src\MasivMovies.API\MasivMovies.API.csproj", "{9EC551C7-BA95-42FA-AE17-1FA9794CFE8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A5B1DE6C-03DC-44C0-B381-A7803DA7F680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasivMovies.Application.Tests", "tests\MasivMovies.Application.Tests\MasivMovies.Application.Tests.csproj", "{7103E799-A473-465E-83A1-6359ABC6C73C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasivMovies.API.Tests", "tests\MasivMovies.API.Tests\MasivMovies.API.Tests.csproj", "{18483F22-FDBB-418A-BC6E-7B2AEDC0965B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAD869FC-6D2E-42BF-8798-A8FEF26BC3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD869FC-6D2E-42BF-8798-A8FEF26BC3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD869FC-6D2E-42BF-8798-A8FEF26BC3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD869FC-6D2E-42BF-8798-A8FEF26BC3C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A4DFAE-8E43-4824-9C8F-0D90C466CB6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A4DFAE-8E43-4824-9C8F-0D90C466CB6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A4DFAE-8E43-4824-9C8F-0D90C466CB6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A4DFAE-8E43-4824-9C8F-0D90C466CB6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D3A6C4D-64CC-4C66-A253-6C3A57009AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D3A6C4D-64CC-4C66-A253-6C3A57009AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D3A6C4D-64CC-4C66-A253-6C3A57009AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D3A6C4D-64CC-4C66-A253-6C3A57009AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EC551C7-BA95-42FA-AE17-1FA9794CFE8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EC551C7-BA95-42FA-AE17-1FA9794CFE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EC551C7-BA95-42FA-AE17-1FA9794CFE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EC551C7-BA95-42FA-AE17-1FA9794CFE8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7103E799-A473-465E-83A1-6359ABC6C73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7103E799-A473-465E-83A1-6359ABC6C73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7103E799-A473-465E-83A1-6359ABC6C73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7103E799-A473-465E-83A1-6359ABC6C73C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18483F22-FDBB-418A-BC6E-7B2AEDC0965B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18483F22-FDBB-418A-BC6E-7B2AEDC0965B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18483F22-FDBB-418A-BC6E-7B2AEDC0965B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18483F22-FDBB-418A-BC6E-7B2AEDC0965B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BAD869FC-6D2E-42BF-8798-A8FEF26BC3C0} = {9AF2C294-722B-49C2-948D-C5782A8945CE}
+		{F4A4DFAE-8E43-4824-9C8F-0D90C466CB6D} = {9AF2C294-722B-49C2-948D-C5782A8945CE}
+		{1D3A6C4D-64CC-4C66-A253-6C3A57009AE5} = {9AF2C294-722B-49C2-948D-C5782A8945CE}
+		{9EC551C7-BA95-42FA-AE17-1FA9794CFE8D} = {9AF2C294-722B-49C2-948D-C5782A8945CE}
+		{7103E799-A473-465E-83A1-6359ABC6C73C} = {A5B1DE6C-03DC-44C0-B381-A7803DA7F680}
+		{18483F22-FDBB-418A-BC6E-7B2AEDC0965B} = {A5B1DE6C-03DC-44C0-B381-A7803DA7F680}
+	EndGlobalSection
+EndGlobal
