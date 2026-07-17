@@ -1,6 +1,7 @@
 using MasivMovies.Application.Interfaces;
 using MasivMovies.Application.Services;
 using MasivMovies.Domain.Interfaces;
+using MasivMovies.Infrastructure.Auth;
 using MasivMovies.Infrastructure.Cache;
 using MasivMovies.Infrastructure.Messaging;
 using MasivMovies.Infrastructure.Repositories;
@@ -45,10 +46,12 @@ public static class DependencyInjection
         services.AddSingleton<IRoomRepository, RedisRoomRepository>();
         services.AddSingleton<IShowtimeRepository, RedisShowtimeRepository>();
         services.AddSingleton<ITicketRepository, RedisTicketRepository>();
+        services.AddSingleton<IUserRepository, RedisUserRepository>();
 
         // Servicios de infraestructura
         services.AddSingleton<ISeatLockService, RedisSeatLockService>();
         services.AddSingleton<IMessagePublisher, RabbitMqPublisher>();
+        services.AddSingleton<IJwtService, JwtService>();
 
         // Servicios de aplicación
         services.AddScoped<MovieService>();
@@ -56,6 +59,7 @@ public static class DependencyInjection
         services.AddScoped<ShowtimeService>();
         services.AddScoped<TicketService>();
         services.AddScoped<ReportService>();
+        services.AddScoped<AuthService>();
 
         return services;
     }
