@@ -19,6 +19,12 @@ if (!string.IsNullOrEmpty(keyVaultUrl))
 // Infraestructura (Redis, RabbitMQ, repositorios, servicios)
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// Application Insights — telemetría y monitoreo
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"] ?? "";
+});
+
 // Autenticación JWT
 var jwtSecretKey = builder.Configuration["Jwt:SecretKey"] ?? "MasivMovies-SuperSecret-Key-2024-Min32Chars!";
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "MasivMovies";

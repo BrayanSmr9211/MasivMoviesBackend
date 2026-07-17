@@ -1,21 +1,27 @@
 using System.Net;
 using System.Text.Json;
+using Microsoft.ApplicationInsights;
 
 namespace MasivMovies.API.Middleware;
 
 /// <summary>
-/// Middleware global que captura todas las excepciones no manejadas
-/// y retorna respuestas HTTP consistentes sin exponer detalles internos.
+/// Middleware global que captura todas las excepciones no manejadas,
+/// las registra en Application Insights y retorna respuestas HTTP consistentes.
 /// </summary>
 public sealed class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<GlobalExceptionMiddleware> _logger;
+    private readonly TelemetryClient _telemetryClient;
 
-    public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
+    public GlobalExceptionMiddleware(
+        RequestDelegate next,
+        ILogger<GlobalExceptionMiddleware> logger,
+        TelemetryClient telemetryClient)
     {
         _next = next;
         _logger = logger;
+        _telemetryClient = telemetryClient;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -41,10 +47,27 @@ public sealed class GlobalExceptionMiddleware
             _ => (HttpStatusCode.InternalServerError, "Ha ocurrido un error interno. Intente más tarde.")
         };
 
-        // Log interno con detalle completo — nunca se expone al cliente
+        // Log interno con detalle completo
         _logger.LogError(exception,
             "Error no manejado | StatusCode: {StatusCode} | Path: {Path} | Message: {Message}",
             (int)statusCode, context.Request.Path, exception.Message);
+
+        // Registrar en Application Insights con propiedades personalizadas
+        var properties = new Dictionary<string, string>
+        {
+            { "StatusCode", ((int)statusCode).ToString() },
+            { "Path", context.Request.Path.Value ?? "" },
+            { "Method", context.Request.Method },
+            { "ExceptionType", exception.GetType().Name }
+        };
+
+        _telemetryClient.TrackException(exception, properties);
+
+        // Si es error 500, registrar como evento crítico
+        if (statusCode == HttpStatusCode.InternalServerError)
+        {
+            _telemetryClient.TrackEvent("CriticalError", properties);
+        }
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)statusCode;
