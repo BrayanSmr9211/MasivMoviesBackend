@@ -1,14 +1,16 @@
 using MasivMovies.Application.DTOs;
 using MasivMovies.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MasivMovies.API.Controllers;
 
 /// <summary>
-/// Controller para la gestión de salas de cine.
+/// Controller para la gestión de salas de cine. Requiere autenticación JWT.
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
+[Authorize]
 public sealed class RoomsController : ControllerBase
 {
     private readonly RoomService _roomService;

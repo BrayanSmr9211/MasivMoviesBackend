@@ -1,13 +1,15 @@
 using MasivMovies.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MasivMovies.API.Controllers;
 
 /// <summary>
-/// Controller para la generación de reportes mensuales.
+/// Controller para la generación de reportes mensuales. Requiere autenticación JWT.
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
+[Authorize]
 public sealed class ReportsController : ControllerBase
 {
     private readonly ReportService _reportService;

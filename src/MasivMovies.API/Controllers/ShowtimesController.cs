@@ -1,14 +1,16 @@
 using MasivMovies.Application.DTOs;
 using MasivMovies.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MasivMovies.API.Controllers;
 
 /// <summary>
-/// Controller para la gestión de funciones (horarios de proyección).
+/// Controller para la gestión de funciones (horarios de proyección). Requiere autenticación JWT.
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
+[Authorize]
 public sealed class ShowtimesController : ControllerBase
 {
     private readonly ShowtimeService _showtimeService;
