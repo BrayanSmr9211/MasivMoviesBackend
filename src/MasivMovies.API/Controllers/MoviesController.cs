@@ -29,16 +29,9 @@ public sealed class MoviesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Create([FromBody] CreateMovieRequest request)
     {
-        try
-        {
-            var movie = await _movieService.CreateMovieAsync(request);
-            _logger.LogInformation("Película creada: {MovieId}", movie.Id);
-            return CreatedAtAction(nameof(GetById), new { id = movie.Id }, movie);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { detail = ex.Message });
-        }
+        var movie = await _movieService.CreateMovieAsync(request);
+        _logger.LogInformation("Película creada: {MovieId}", movie.Id);
+        return CreatedAtAction(nameof(GetById), new { id = movie.Id }, movie);
     }
 
     /// <summary>
@@ -63,7 +56,7 @@ public sealed class MoviesController : ControllerBase
         var movie = await _movieService.GetMovieByIdAsync(id);
         if (movie is null)
         {
-            return NotFound(new { detail = $"Película con Id '{id}' no encontrada." });
+            throw new KeyNotFoundException($"Película con Id '{id}' no encontrada.");
         }
         return Ok(movie);
     }

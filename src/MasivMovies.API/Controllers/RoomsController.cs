@@ -29,16 +29,9 @@ public sealed class RoomsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Create([FromBody] CreateRoomRequest request)
     {
-        try
-        {
-            var room = await _roomService.CreateRoomAsync(request);
-            _logger.LogInformation("Sala creada: {RoomId}", room.Id);
-            return CreatedAtAction(nameof(GetAll), null, room);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { detail = ex.Message });
-        }
+        var room = await _roomService.CreateRoomAsync(request);
+        _logger.LogInformation("Sala creada: {RoomId}", room.Id);
+        return CreatedAtAction(nameof(GetAll), null, room);
     }
 
     /// <summary>

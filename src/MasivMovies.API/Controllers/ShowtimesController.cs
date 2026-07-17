@@ -29,16 +29,9 @@ public sealed class ShowtimesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Create([FromBody] CreateShowtimeRequest request)
     {
-        try
-        {
-            var showtime = await _showtimeService.CreateShowtimeAsync(request);
-            _logger.LogInformation("Función creada: {ShowtimeId}", showtime.Id);
-            return CreatedAtAction(nameof(GetAll), null, showtime);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { detail = ex.Message });
-        }
+        var showtime = await _showtimeService.CreateShowtimeAsync(request);
+        _logger.LogInformation("Función creada: {ShowtimeId}", showtime.Id);
+        return CreatedAtAction(nameof(GetAll), null, showtime);
     }
 
     /// <summary>
@@ -50,16 +43,9 @@ public sealed class ShowtimesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Cancel(Guid id)
     {
-        try
-        {
-            await _showtimeService.CancelShowtimeAsync(id);
-            _logger.LogInformation("Función cancelada: {ShowtimeId}", id);
-            return NoContent();
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { detail = ex.Message });
-        }
+        await _showtimeService.CancelShowtimeAsync(id);
+        _logger.LogInformation("Función cancelada: {ShowtimeId}", id);
+        return NoContent();
     }
 
     /// <summary>

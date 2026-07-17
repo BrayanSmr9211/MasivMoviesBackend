@@ -27,14 +27,7 @@ public sealed class ReportsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetMonthlyReport([FromQuery] int year, [FromQuery] int month)
     {
-        try
-        {
-            var report = await _reportService.GetMonthlyReportAsync(year, month);
-            return Ok(report);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(new { detail = ex.Message });
-        }
+        var report = await _reportService.GetMonthlyReportAsync(year, month);
+        return Ok(report);
     }
 }

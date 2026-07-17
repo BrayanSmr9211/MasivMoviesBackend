@@ -1,5 +1,6 @@
 using System.Text;
 using Azure.Identity;
+using MasivMovies.API.Middleware;
 using MasivMovies.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -99,6 +100,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

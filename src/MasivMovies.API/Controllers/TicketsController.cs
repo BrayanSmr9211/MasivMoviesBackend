@@ -33,25 +33,12 @@ public sealed class TicketsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Purchase([FromBody] PurchaseTicketRequest request)
     {
-        try
-        {
-            // Extraer UserId del token JWT
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
-            {
-                return Unauthorized(new { detail = "Token inválido." });
-            }
+        var userId = GetUserIdFromToken();
+        request.UserId = userId;
 
-            request.UserId = userId;
-
-            var ticket = await _ticketService.PurchaseTicketAsync(request);
-            _logger.LogInformation("Boleto reservado: {TicketId}", ticket.Id);
-            return CreatedAtAction(nameof(GetSeatStatus), new { showtimeId = ticket.ShowtimeId }, ticket);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { detail = ex.Message });
-        }
+        var ticket = await _ticketService.PurchaseTicketAsync(request);
+        _logger.LogInformation("Boleto reservado: {TicketId}", ticket.Id);
+        return CreatedAtAction(nameof(GetSeatStatus), new { showtimeId = ticket.ShowtimeId }, ticket);
     }
 
     /// <summary>
@@ -63,22 +50,11 @@ public sealed class TicketsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Confirm(Guid ticketId)
     {
-        try
-        {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
-            {
-                return Unauthorized(new { detail = "Token inválido." });
-            }
+        var userId = GetUserIdFromToken();
 
-            var ticket = await _ticketService.ConfirmPurchaseAsync(ticketId, userId);
-            _logger.LogInformation("Boleto confirmado: {TicketId}", ticket.Id);
-            return Ok(ticket);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { detail = ex.Message });
-        }
+        var ticket = await _ticketService.ConfirmPurchaseAsync(ticketId, userId);
+        _logger.LogInformation("Boleto confirmado: {TicketId}", ticket.Id);
+        return Ok(ticket);
     }
 
     /// <summary>
@@ -90,14 +66,20 @@ public sealed class TicketsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetSeatStatus(Guid showtimeId)
     {
-        try
+        var status = await _ticketService.GetSeatStatusAsync(showtimeId);
+        return Ok(status);
+    }
+
+    /// <summary>
+    /// Extrae el UserId del claim del token JWT.
+    /// </summary>
+    private Guid GetUserIdFromToken()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
         {
-            var status = await _ticketService.GetSeatStatusAsync(showtimeId);
-            return Ok(status);
+            throw new UnauthorizedAccessException("Token inválido o expirado.");
         }
-        catch (InvalidOperationException ex)
-        {
-            return NotFound(new { detail = ex.Message });
-        }
+        return userId;
     }
 }

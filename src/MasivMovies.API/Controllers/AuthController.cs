@@ -28,16 +28,9 @@ public sealed class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
-        try
-        {
-            var response = await _authService.RegisterAsync(request);
-            _logger.LogInformation("Usuario registrado: {Username}", request.Username);
-            return CreatedAtAction(nameof(Register), response);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return Conflict(new { detail = ex.Message });
-        }
+        var response = await _authService.RegisterAsync(request);
+        _logger.LogInformation("Usuario registrado: {Username}", request.Username);
+        return CreatedAtAction(nameof(Register), response);
     }
 
     /// <summary>
@@ -48,15 +41,8 @@ public sealed class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        try
-        {
-            var response = await _authService.LoginAsync(request);
-            _logger.LogInformation("Login exitoso: {Username}", request.Username);
-            return Ok(response);
-        }
-        catch (InvalidOperationException)
-        {
-            return Unauthorized(new { detail = "Credenciales inválidas." });
-        }
+        var response = await _authService.LoginAsync(request);
+        _logger.LogInformation("Login exitoso: {Username}", request.Username);
+        return Ok(response);
     }
 }
